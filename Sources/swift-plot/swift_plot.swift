@@ -1,6 +1,0 @@
-public struct swift_plot {
-    public private(set) var text = "Hello, World!"
-
-    public init() {
-    }
-}
