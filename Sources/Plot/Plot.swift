@@ -6,18 +6,20 @@ public struct Plot: View {
   @Environment(\.axisStyle) var axisStyle: AxisStyle?
   @Environment(\.plotStyle) var plotStyle: PlotStyle
   
-  var f: (Double) -> Double
-  var range: ClosedRange<Double>
-  var step: Double.Stride
+//  var f: (Double) -> Double
+//  var range: ClosedRange<Double>
+//  var step: Double.Stride
+  var proxy: PlotProxy
   
   public init(
     _ f: @escaping (Double) -> Double,
     in range: ClosedRange<Double>,
     step: Double.Stride = 1.0
   ) {
-    self.f = f
-    self.range = range
-    self.step = step
+//    self.f = f
+//    self.range = range
+//    self.step = step
+    self.proxy = PlotProxy.init(f, in: range, step: step)
   }
   
   public var body: some View {
@@ -29,13 +31,13 @@ public struct Plot: View {
           .frame(minWidth: 200, minHeight: 200)
         
         // Todo: Move to have it's own style.
-        Ticks(f, in: range, step: step)
+        Ticks(proxy: proxy)
           .stroke(lineWidth: axisStyle.lineWidth * 0.5)
           .foregroundColor(axisStyle.color)
           .frame(minWidth: 200, minHeight: 200)
       }
       
-      PlotShape(f, in: range, step: step)
+      PlotShape(proxy: proxy)
         .stroke(lineWidth: plotStyle.lineWidth)
         .foregroundColor(plotStyle.color)
         .frame(minWidth: 200, minHeight: 200)
